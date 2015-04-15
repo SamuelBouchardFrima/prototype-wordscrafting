@@ -51,6 +51,26 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.mini
 			
 			Type = aType;
 			mSpriteSize = 50;
+			
+			var character:String, valid:Boolean;
+			var i:int, end:int;
+			while (mKnownWordPieceList.length < 3)
+			{
+				character = Random.FromString(sHighFrequency);
+				valid = true;
+				for (i = 0, end = mKnownWordPieceList.length; i < end; ++i)
+				{
+					if (mKnownWordPieceList[i].PieceString == character)
+					{
+						valid = false;
+						break;
+					}
+				}
+				if (valid)
+				{
+					mKnownWordPieceList.push(new WordPiece(character));
+				}
+			}
 		}
 		
 		override public function Eat(aFood:Food):void
@@ -69,28 +89,40 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.mini
 			}
 		}
 		
-		override protected function CreateRandomWordPiece():WordPiece
+		override protected function ValidateWordPieceType(aWordPiece:WordPiece):Boolean
 		{
-			var letter:String;
 			switch (mType)
 			{
 				case LetterType.VOWEL:
-					letter = Random.FromString(sVowel);
-					break;
+					return sVowel.indexOf(aWordPiece.PieceString) != -1;
 				case LetterType.CONSONANT:
-					letter = Random.FromString(sConsonant);
-					break;
+					return sConsonant.indexOf(aWordPiece.PieceString) != -1;
 				//case LetterType.HIGH_FREQUENCY:
-					//letter = Random.FromString(sHighFrequency);
-					//break;
+					//return sHighFrequency.indexOf(aWordPiece.PieceString) != -1;
 				//case LetterType.LOW_FREQUENCY:
-					//letter = Random.FromString(sLowFrequency);
-					//break;
+					//return sLowFrequency.indexOf(aWordPiece.PieceString) != -1;
+				default:
+					throw new Error("LetterType " + mType.Description + " is not handled.");
+					return false;
+			}
+		}
+		
+		override protected function CreateRandomWordPiece():WordPiece
+		{
+			switch (mType)
+			{
+				case LetterType.VOWEL:
+					return new LetterWordPiece(mType, Random.FromString(sVowel));
+				case LetterType.CONSONANT:
+					return new LetterWordPiece(mType, Random.FromString(sConsonant));
+				//case LetterType.HIGH_FREQUENCY:
+					//return new LetterWordPiece(mType, Random.FromString(sHighFrequency));
+				//case LetterType.LOW_FREQUENCY:
+					//return new LetterWordPiece(mType, Random.FromString(sLowFrequency));
 				default:
 					throw new Error("LetterType " + mType.Description + " is not handled.");
 					return null;
 			}
-			return new LetterWordPiece(mType, letter);
 		}
 	}
 }

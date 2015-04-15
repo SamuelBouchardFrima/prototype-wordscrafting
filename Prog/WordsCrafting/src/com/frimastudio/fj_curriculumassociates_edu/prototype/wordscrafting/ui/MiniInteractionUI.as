@@ -3,6 +3,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.Asset;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.mini.Mini;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.mini.MiniManager;
+	import flash.display.Bitmap;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -50,6 +51,12 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui
 			sprite.graphics.lineStyle(2, 0x000000);
 			sprite.graphics.drawCircle(0, 0, aMini.SpriteSize / 2);
 			sprite.graphics.endFill();
+			var bitmap:Bitmap = new Asset.MiniBitmap();
+			bitmap.width = aMini.SpriteSize;
+			bitmap.height = aMini.SpriteSize;
+			bitmap.x = bitmap.width * -0.5;
+			bitmap.y = bitmap.height * -0.5;
+			sprite.addChild(bitmap);
 			return sprite;
 		}
 		

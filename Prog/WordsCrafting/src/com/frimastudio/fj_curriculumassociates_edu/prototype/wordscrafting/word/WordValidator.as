@@ -15,7 +15,6 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 			return mInstance;
 		}
 		
-		public var mData:XML;
 		public var mWordDictionary:Dictionary;
 		
 		public function WordValidator()
@@ -28,7 +27,6 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 		
 		public function Load():void
 		{
-			//mData
 			var loader:URLLoader = new URLLoader();
 			loader.addEventListener(Event.COMPLETE, OnCompleteLoad);
 			loader.load(new URLRequest("core-wordnet.xml"));

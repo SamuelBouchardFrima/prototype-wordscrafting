@@ -38,17 +38,45 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.mini
 				return CreateRandomWordPiece();
 			}
 			
-			// TODO:	fill mKnownWordPieceList with pieces of the correct type
-			
 			var possibleOutput:Vector.<WordPiece> = new Vector.<WordPiece>();
-			for (var i:int = 0, end:int = aWord.PieceList.length; i < end; ++i)
+			var possibleInput:Vector.<WordPiece> = new Vector.<WordPiece>();
+			var i:int, endi:int;
+			var j:int, endj:int;
+			var possible:Boolean;
+			for (i = 0, endi = aWord.PieceList.length; i < endi; ++i)
 			{
-				if (mKnownWordPieceList.indexOf(aWord.PieceList[i]) != -1)
+				if (ValidateWordPieceType(aWord.PieceList[i]))
 				{
-					possibleOutput.push(aWord.PieceList[i]);
+					possible = false;
+					for (j = 0, endj = mKnownWordPieceList.length; j < endj; ++j)
+					{
+						if (mKnownWordPieceList[j].PieceString == aWord.PieceList[i].PieceString)
+						{
+							possibleOutput.push(aWord.PieceList[i]);
+							possible = true;
+							break;
+						}
+					}
+					if (!possible)
+					{
+						possibleInput.push(aWord.PieceList[i]);
+					}
 				}
 			}
+			
+			if (possibleInput.length)
+			{
+				mKnownWordPieceList.push(Random.FromList(possibleInput));
+			}
+			
+			trace("WordPieceList: " + mKnownWordPieceList);
+			
 			return (possibleOutput.length > 0 ? Random.FromList(possibleOutput) : CreateRandomWordPiece());
+		}
+		
+		protected function ValidateWordPieceType(aWordPiece:WordPiece):Boolean
+		{
+			return true;
 		}
 		
 		protected function CreateRandomWordPiece():WordPiece

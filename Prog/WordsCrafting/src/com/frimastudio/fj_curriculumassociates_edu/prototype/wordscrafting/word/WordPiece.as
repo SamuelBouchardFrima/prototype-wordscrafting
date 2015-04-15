@@ -17,5 +17,10 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 		{
 			mPieceString = aPieceString;
 		}
+		
+		public function toString():String
+		{
+			return mPieceString;
+		}
 	}
 }

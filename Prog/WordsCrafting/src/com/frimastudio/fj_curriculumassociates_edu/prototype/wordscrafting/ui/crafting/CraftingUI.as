@@ -10,6 +10,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.UIManager;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.UIType;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word.Word;
+	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word.WordCollection;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word.WordPiece;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word.WordValidator;
 	import flash.display.Sprite;
@@ -26,11 +27,13 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 		private var mDraggedUIWordPieceGroup:UIWordPieceGroup;
 		private var mEquipedUIWordPiece:UIWordPiece;
 		private var mEquipedUIWordPieceGroup:UIWordPieceGroup;
+		private var mStartWord:Word;
 		
-		public function CraftingUI()
+		public function CraftingUI(aStartWord:Word = null)
 		{
 			mUIWordPieceList = new Vector.<UIWordPiece>();
 			mUIWordPieceGroupList = new Vector.<UIWordPieceGroup>();
+			mStartWord = aStartWord;
 			
 			super();
 			
@@ -68,7 +71,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 		
 		override protected function CreateMiniSprite(aMini:Mini):Sprite
 		{
-			mUIWordPieceList.push(new UIWordPiece(aMini.Produce()));
+			mUIWordPieceList.push(new UIWordPiece(aMini.Produce(mStartWord)));
 			return super.CreateMiniSprite(aMini);
 		}
 		
@@ -103,11 +106,11 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			var word:Word = new Word(pieceList);
 			if (!WordValidator.Instance.Validate(word))
 			{
-				trace("Invalid word");
+				trace("Invalid word " + word.WordString);
 				return;
 			}
 			
-			trace("Valid word");
+			trace("Valid word " + word.WordString);
 			
 			for (i = 0, end = mUIWordPieceList.length; i < end; ++i)
 			{
@@ -289,7 +292,16 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			if (piece.x >= mDictionaryButton.x - offset.x && piece.x <= mDictionaryButton.x + offset.x &&
 				piece.y >= mDictionaryButton.y - offset.y && piece.y <= mDictionaryButton.y + offset.y)
 			{
-				// TODO:	send piece's word to dictionary
+				var word:Word = new Word(new <WordPiece>[piece.Piece]);
+				if (!WordValidator.Instance.Validate(word))
+				{
+					trace("Invalid word " + word.WordString);
+					return;
+				}
+				
+				trace("Valid word " + word.WordString);
+				WordCollection.Instance.AddWord(word);
+				UIManager.Instance.CurrentUI = new UIType.DICTIONARY.UIClass();
 				return;
 			}
 			
@@ -321,6 +333,21 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 				group.y >= mDictionaryButton.y - offset.y && group.y <= mDictionaryButton.y + offset.y)
 			{
 				// TODO:	send group's word to dictionary
+				var pieceList:Vector.<WordPiece> = new Vector.<WordPiece>();
+				for (var i:int = 0, end:int = group.PieceList.length; i < end; ++i)
+				{
+					pieceList.push(group.PieceList[i].Piece);
+				}
+				var word:Word = new Word(pieceList);
+				if (!WordValidator.Instance.Validate(word))
+				{
+					trace("Invalid word " + word.WordString);
+					return;
+				}
+				
+				trace("Valid word " + word.WordString);
+				WordCollection.Instance.AddWord(word);
+				UIManager.Instance.CurrentUI = new UIType.DICTIONARY.UIClass();
 				return;
 			}
 			
