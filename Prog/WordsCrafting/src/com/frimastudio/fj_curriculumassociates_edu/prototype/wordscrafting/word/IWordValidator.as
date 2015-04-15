@@ -6,6 +6,6 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 	{
 		function Load():void;
 		
-		function Validate(aWord:Word):Boolean;
+		function Validate(aWord:String):Boolean;
 	}	
 }

@@ -1,5 +1,6 @@
 package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.dictionary
 {
+	import com.frimastudio.fj_curriculumassociates_edu.prototype.util.MathUtil;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.Asset;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.IconUIButton;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.UI;
@@ -20,6 +21,8 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.d
 		private var mCollectionWindow:Sprite;
 		private var mCollection:Sprite;
 		private var mWordButtonList:Vector.<UIButton>;
+		private var mScrolling:Boolean;
+		private var mMouseYDelta:Number;
 		
 		public function DictionaryUI()
 		{
@@ -55,6 +58,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.d
 			mCollection = new Sprite();
 			mCollection.x = 0;
 			mCollection.y = 0;
+			mCollection.addEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownCollection);
 			mCollectionWindow.addChild(mCollection);
 			
 			mWordButtonList = new Vector.<UIButton>();
@@ -76,6 +80,9 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.d
 		{
 			mHomeButton.removeEventListener(MouseEvent.CLICK, OnClickHomeButton);
 			mCraftingButton.removeEventListener(MouseEvent.CLICK, OnClickCraftingButton);
+			mCollection.removeEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownCollection);
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, OnMouseMove);
+			stage.removeEventListener(MouseEvent.MOUSE_UP, OnMouseUp);
 			
 			for (var i:int = 0, end:int = mWordButtonList.length; i < end; ++i)
 			{
@@ -95,8 +102,48 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.d
 			UIManager.Instance.CurrentUI = new UIType.CRAFTING.UIClass();
 		}
 		
+		private function OnMouseDownCollection(aEvent:MouseEvent):void
+		{
+			mScrolling = false;
+			mMouseYDelta = mouseY;
+			
+			stage.addEventListener(MouseEvent.MOUSE_MOVE, OnMouseMove);
+			stage.addEventListener(MouseEvent.MOUSE_UP, OnMouseUp);
+		}
+		
+		private function OnMouseMove(aEvent:MouseEvent):void
+		{
+			if (mCollection.height <= 400)
+			{
+				return;
+			}
+			
+			mScrolling = true;
+			
+			mCollection.y += mouseY - mMouseYDelta;
+			mCollection.y = MathUtil.MinMax(mCollection.y, 396 - mCollection.height, 0);
+			
+			mMouseYDelta = mouseY;
+		}
+		
+		private function OnMouseUp(aEvent:MouseEvent):void
+		{
+			if (!mScrolling)
+			{
+				return;
+			}
+			
+			stage.removeEventListener(MouseEvent.MOUSE_MOVE, OnMouseMove);
+			stage.removeEventListener(MouseEvent.MOUSE_UP, OnMouseUp);
+		}
+		
 		private function OnClickWordButton(aEvent:MouseEvent):void
 		{
+			if (mScrolling)
+			{
+				return;
+			}
+			
 			UIManager.Instance.CurrentUI = new UIType.CRAFTING.UIClass((aEvent.currentTarget as WordUIButton).WordObject);
 		}
 	}

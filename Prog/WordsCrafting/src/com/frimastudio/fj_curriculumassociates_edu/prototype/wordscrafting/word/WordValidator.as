@@ -29,12 +29,12 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 		{
 			var loader:URLLoader = new URLLoader();
 			loader.addEventListener(Event.COMPLETE, OnCompleteLoad);
-			loader.load(new URLRequest("core-wordnet.xml"));
+			loader.load(new URLRequest("enable1.xml"));
 		}
 		
-		public function Validate(aWord:Word):Boolean
+		public function Validate(aWord:String):Boolean
 		{
-			return mWordDictionary[aWord.WordString];
+			return mWordDictionary[aWord];
 		}
 		
 		private function OnCompleteLoad(aEvent:Event):void
@@ -43,11 +43,13 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 			
 			mWordDictionary = new Dictionary();
 			var data:XML = new XML(aEvent.target.data);
-			var parsedData:Array = data.text()[0].split("[");
+			var parsedData:Array = data.text()[0].split("\n");
 			var word:String;
-			for (var i:int = 1, end:int = parsedData.length; i < end; i += 2)
+			for (var i:int = 1, end:int = parsedData.length - 1; i < end; ++i)
 			{
-				mWordDictionary[parsedData[i].split("%")[0]] = true;
+				word = parsedData[i];
+				word = word.substr(0, word.length - 1);
+				mWordDictionary[word] = true;
 			}
 			
 			dispatchEvent(new WordValidatorEvent(WordValidatorEvent.LOAD_COMPLETE));

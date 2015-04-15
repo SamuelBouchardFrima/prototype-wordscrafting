@@ -29,8 +29,8 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui
 		{
 			if (mCurrentUI)
 			{
-				mUIContainer.removeChild(mCurrentUI);
 				mCurrentUI.Dispose();
+				mUIContainer.removeChild(mCurrentUI);
 			}
 			
 			mCurrentUI = aValue;

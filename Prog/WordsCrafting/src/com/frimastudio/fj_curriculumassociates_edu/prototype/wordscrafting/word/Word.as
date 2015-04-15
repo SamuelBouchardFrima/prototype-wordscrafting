@@ -23,6 +23,11 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 			mWordString = aValue;
 		}
 		
+		public function get Valid():Boolean
+		{
+			return WordValidator.Instance.Validate(mWordString);
+		}
+		
 		public function Word(aPieceList:Vector.<WordPiece>)
 		{
 			mPieceList = aPieceList;

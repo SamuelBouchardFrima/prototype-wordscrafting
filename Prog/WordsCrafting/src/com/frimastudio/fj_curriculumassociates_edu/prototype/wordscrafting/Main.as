@@ -8,6 +8,8 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting
 	import flash.display.Sprite;
 	import flash.events.Event;
 	
+	XML.ignoreWhitespace = false;
+	
 	public class Main extends Sprite
 	{
 		public function Main():void

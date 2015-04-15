@@ -75,6 +75,16 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			return super.CreateMiniSprite(aMini);
 		}
 		
+		private function CreateWord(aPieceList:Vector.<UIWordPiece>):Word
+		{
+			var pieceList:Vector.<WordPiece> = new Vector.<WordPiece>();
+			for (var i:int = 0, end:int = aPieceList.length; i < end; ++i)
+			{
+				pieceList.push(aPieceList[i].Piece);
+			}
+			return new Word(pieceList);
+		}
+		
 		private function OnClickDictionaryButton(aEvent:MouseEvent):void
 		{
 			UIManager.Instance.CurrentUI = new UIType.DICTIONARY.UIClass();
@@ -82,20 +92,15 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 		
 		private function OnClickRadioButton(aEvent:MouseEvent):void
 		{
-			var pieceList:Vector.<WordPiece> = new Vector.<WordPiece>();
-			var i:int, end:int;
-			
+			var word:Word;
 			if (mEquipedUIWordPiece)
 			{
-				pieceList.push(mEquipedUIWordPiece.Piece);
+				word = CreateWord(new <UIWordPiece>[mEquipedUIWordPiece]);
 				mEquipedUIWordPiece = null;
 			}
 			else if (mEquipedUIWordPieceGroup)
 			{
-				for (i = 0, end = mEquipedUIWordPieceGroup.PieceList.length; i < end; ++i)
-				{
-					pieceList.push(mEquipedUIWordPieceGroup.PieceList[i].Piece);
-				}
+				word = CreateWord(mEquipedUIWordPieceGroup.PieceList);
 				mEquipedUIWordPieceGroup = null;
 			}
 			else
@@ -103,15 +108,14 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 				return;
 			}
 			
-			var word:Word = new Word(pieceList);
-			if (!WordValidator.Instance.Validate(word))
+			if (!word.Valid)
 			{
-				trace("Invalid word " + word.WordString);
+				trace("Invalid word " + word);
 				return;
 			}
-			
 			trace("Valid word " + word.WordString);
 			
+			var i:int, end:int;
 			for (i = 0, end = mUIWordPieceList.length; i < end; ++i)
 			{
 				removeChild(mUIWordPieceList[i]);
@@ -292,14 +296,14 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			if (piece.x >= mDictionaryButton.x - offset.x && piece.x <= mDictionaryButton.x + offset.x &&
 				piece.y >= mDictionaryButton.y - offset.y && piece.y <= mDictionaryButton.y + offset.y)
 			{
-				var word:Word = new Word(new <WordPiece>[piece.Piece]);
-				if (!WordValidator.Instance.Validate(word))
+				var word:Word = CreateWord(new <UIWordPiece>[piece]);
+				if (!word.Valid)
 				{
 					trace("Invalid word " + word.WordString);
 					return;
 				}
-				
 				trace("Valid word " + word.WordString);
+				
 				WordCollection.Instance.AddWord(word);
 				UIManager.Instance.CurrentUI = new UIType.DICTIONARY.UIClass();
 				return;
@@ -332,20 +336,14 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			if (group.x >= mDictionaryButton.x - offset.x && group.x <= mDictionaryButton.x + offset.x &&
 				group.y >= mDictionaryButton.y - offset.y && group.y <= mDictionaryButton.y + offset.y)
 			{
-				// TODO:	send group's word to dictionary
-				var pieceList:Vector.<WordPiece> = new Vector.<WordPiece>();
-				for (var i:int = 0, end:int = group.PieceList.length; i < end; ++i)
-				{
-					pieceList.push(group.PieceList[i].Piece);
-				}
-				var word:Word = new Word(pieceList);
-				if (!WordValidator.Instance.Validate(word))
+				var word:Word = CreateWord(group.PieceList);
+				if (!word.Valid)
 				{
 					trace("Invalid word " + word.WordString);
 					return;
 				}
-				
 				trace("Valid word " + word.WordString);
+				
 				WordCollection.Instance.AddWord(word);
 				UIManager.Instance.CurrentUI = new UIType.DICTIONARY.UIClass();
 				return;

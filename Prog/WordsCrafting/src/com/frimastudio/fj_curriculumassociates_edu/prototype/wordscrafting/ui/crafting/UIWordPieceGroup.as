@@ -1,5 +1,7 @@
 package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.crafting
 {
+	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word.Word;
+	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word.WordPiece;
 	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
@@ -12,6 +14,16 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 		public function get PieceList():Vector.<UIWordPiece>
 		{
 			return mPieceList;
+		}
+		
+		private function get Valid():Boolean
+		{
+			var pieceList:Vector.<WordPiece> = new Vector.<WordPiece>();
+			for (var i:int = 0, end:int = mPieceList.length; i < end; ++i)
+			{
+				pieceList.push(mPieceList[i].Piece);
+			}
+			return new Word(pieceList).Valid;
 		}
 		
 		public function UIWordPieceGroup(aPieceList:Vector.<UIWordPiece>)
@@ -71,7 +83,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 		{
 			mGroupBackground.graphics.clear();
 			mGroupBackground.graphics.beginFill(0xEEEEEE, 0.5);
-			mGroupBackground.graphics.lineStyle(3, 0xFF0000);
+			mGroupBackground.graphics.lineStyle(3, (Valid ? 0x00FF00 : 0xFF0000));
 			mGroupBackground.graphics.moveTo(mPieceList[0].x - (mPieceList[0].width / 2) - 10,
 				mPieceList[0].y - (mPieceList[0].height / 2) - 10);
 			mGroupBackground.graphics.lineTo(mPieceList[mPieceList.length - 1].x + (mPieceList[0].width / 2) + 10,
