@@ -29,6 +29,8 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.g
 					return Asset.PizzaFoodBitmap;
 				case FoodType.COFFEE:
 					return Asset.CoffeeFoodBitmap;
+				case FoodType.CUPCAKE:
+					return Asset.CupcakeFoodBitmap;
 				default:
 					throw new Error("Food type " + aType.Description + " not handled.");
 					return null;

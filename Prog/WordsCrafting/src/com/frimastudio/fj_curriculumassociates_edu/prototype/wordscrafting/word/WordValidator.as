@@ -29,7 +29,8 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 		{
 			var loader:URLLoader = new URLLoader();
 			loader.addEventListener(Event.COMPLETE, OnCompleteLoad);
-			loader.load(new URLRequest("enable1.xml"));
+			//loader.load(new URLRequest("enable1.xml"));
+			loader.load(new URLRequest("dictionnary01.xml"));
 		}
 		
 		public function Validate(aWord:String):Boolean
@@ -49,7 +50,10 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 			{
 				word = parsedData[i];
 				word = word.substr(0, word.length - 1);
-				mWordDictionary[word] = true;
+				if (word != "")
+				{
+					mWordDictionary[word] = true;
+				}
 			}
 			
 			dispatchEvent(new WordValidatorEvent(WordValidatorEvent.LOAD_COMPLETE));

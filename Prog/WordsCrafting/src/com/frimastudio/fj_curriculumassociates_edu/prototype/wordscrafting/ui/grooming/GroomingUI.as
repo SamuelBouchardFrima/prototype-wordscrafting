@@ -18,6 +18,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.g
 	{
 		private var mPizzaButton:UIButton;
 		private var mCoffeeButton:UIButton;
+		private var mCupcakeButton:UIButton;
 		private var mDraggedFood:UIFood;
 		
 		public function GroomingUI()
@@ -27,22 +28,29 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.g
 			var buttonSize:Point = new Point(100, 100);
 			
 			mPizzaButton = new IconUIButton(buttonSize, Asset.PizzaButtonBitmap);
-			mPizzaButton.x = 300;
+			mPizzaButton.x = 200;
 			mPizzaButton.y = 200;
 			addChild(mPizzaButton);
 			mPizzaButton.addEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownPizzaButton);
 			
 			mCoffeeButton = new IconUIButton(buttonSize, Asset.CoffeeButtonBitmap);
-			mCoffeeButton.x = 500;
+			mCoffeeButton.x = 400;
 			mCoffeeButton.y = 200;
 			addChild(mCoffeeButton);
 			mCoffeeButton.addEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownCoffeeButton);
+			
+			mCupcakeButton = new IconUIButton(buttonSize, Asset.CupcakeButtonBitmap);
+			mCupcakeButton.x = 600;
+			mCupcakeButton.y = 200;
+			addChild(mCupcakeButton);
+			mCupcakeButton.addEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownCupcakeButton);
 		}
 		
 		override public function Dispose():void
 		{
 			mPizzaButton.removeEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownPizzaButton);
 			mCoffeeButton.removeEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownCoffeeButton);
+			mCupcakeButton.removeEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownCupcakeButton);
 			
 			if (mDraggedFood)
 			{
@@ -71,6 +79,11 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.g
 		private function OnMouseDownCoffeeButton(aEvent:MouseEvent):void
 		{
 			CreateFood(FoodType.COFFEE);
+		}
+		
+		private function OnMouseDownCupcakeButton(aEvent:MouseEvent):void
+		{
+			CreateFood(FoodType.CUPCAKE);
 		}
 		
 		private function OnMouseMove(aEvent:MouseEvent):void

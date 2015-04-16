@@ -6,10 +6,11 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 	{
 		public static var RELEASE_PIECE:String = "UIWordPieceGroupEvent::RELEASE_PIECE";
 		public static var DRAG_PIECE:String = "UIWordPieceGroupEvent::DRAG_PIECE";
+		public static var SEND_TO_DICTIONARY:String = "UIWordPieceGroupEvent::SEND_TO_DICTIONARY";
 		
 		public var Piece:UIWordPiece;
 		
-		public function UIWordPieceGroupEvent(type:String, aPiece:UIWordPiece, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function UIWordPieceGroupEvent(type:String, aPiece:UIWordPiece = null, bubbles:Boolean=false, cancelable:Boolean=false)
 		{ 
 			super(type, bubbles, cancelable);
 			

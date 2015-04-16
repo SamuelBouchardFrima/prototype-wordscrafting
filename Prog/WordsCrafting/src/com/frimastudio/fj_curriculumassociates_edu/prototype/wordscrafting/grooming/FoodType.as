@@ -5,6 +5,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.groo
 		public static var LIST:Array = [];
 		public static var PIZZA:FoodType = new FoodType(0, "PIZZA");
 		public static var COFFEE:FoodType = new FoodType(1, "COFFEE");
+		public static var CUPCAKE:FoodType = new FoodType(2, "CUPCAKE");
 		
 		private var mID:int;
 		private var mDescription:String;

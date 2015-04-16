@@ -13,15 +13,21 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting
 		
 		[Embed(source = "../../../../../../art/icon-mini.png")]
 		public static var MiniBitmap:Class;
+		[Embed(source = "../../../../../../art/icon-signal.png")]
+		public static var RadioSignalBitmap:Class;
 		[Embed(source = "../../../../../../art/icon-pizza.png")]
 		public static var PizzaButtonBitmap:Class;
 		[Embed(source = "../../../../../../art/icon-coffe-maker.png")]
 		public static var CoffeeButtonBitmap:Class;
+		[Embed(source = "../../../../../../art/icon-cupcake.png")]
+		public static var CupcakeButtonBitmap:Class;
 		
 		[Embed(source = "../../../../../../art/icon-pizza-part.png")]
 		public static var PizzaFoodBitmap:Class;
 		[Embed(source = "../../../../../../art/icon-coffee-cup.png")]
 		public static var CoffeeFoodBitmap:Class;
+		[Embed(source = "../../../../../../art/icon-cupcake.png")]
+		public static var CupcakeFoodBitmap:Class;
 		
 		public function Asset()
 		{

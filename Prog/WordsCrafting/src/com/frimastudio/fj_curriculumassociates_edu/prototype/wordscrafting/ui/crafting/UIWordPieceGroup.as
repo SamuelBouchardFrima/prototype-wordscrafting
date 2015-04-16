@@ -1,5 +1,8 @@
 package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.crafting
 {
+	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.Asset;
+	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.IconUIButton;
+	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.UIButton;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word.Word;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word.WordPiece;
 	import flash.display.Sprite;
@@ -10,6 +13,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 	{
 		private var mGroupBackground:Sprite;
 		private var mPieceList:Vector.<UIWordPiece>;
+		private var mDictionaryButton:UIButton;
 		
 		public function get PieceList():Vector.<UIWordPiece>
 		{
@@ -47,6 +51,14 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			}
 			
 			DrawGroupBackground();
+			
+			mDictionaryButton = new IconUIButton(new Point(25, 25), Asset.DictionaryButtonBitmap, 0x00FF00);
+			mDictionaryButton.x = -12.5;
+			mDictionaryButton.y = 37.5;
+			mDictionaryButton.visible = Valid;
+			mDictionaryButton.addEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownDictionaryButton);
+			mDictionaryButton.addEventListener(MouseEvent.CLICK, OnClickDictionaryButton);
+			addChild(mDictionaryButton);
 		}
 		
 		public function Dispose():void
@@ -55,6 +67,9 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			{
 				mPieceList[i].removeEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownUIWordPiece);
 			}
+			
+			mDictionaryButton.removeEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownDictionaryButton);
+			mDictionaryButton.removeEventListener(MouseEvent.CLICK, OnClickDictionaryButton);
 		}
 		
 		public function InsertPiece(aPiece:UIWordPiece, aIndex:int):void
@@ -77,6 +92,8 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			}
 			
 			DrawGroupBackground();
+			
+			mDictionaryButton.visible = Valid;
 		}
 		
 		private function DrawGroupBackground():void 
@@ -122,7 +139,21 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			else
 			{
 				DrawGroupBackground();
+				
+				mDictionaryButton.visible = Valid;
 			}
+		}
+		
+		private function OnMouseDownDictionaryButton(aEvent:MouseEvent):void
+		{
+			aEvent.stopPropagation();
+		}
+		
+		private function OnClickDictionaryButton(aEvent:MouseEvent):void
+		{
+			aEvent.stopPropagation();
+			
+			dispatchEvent(new UIWordPieceGroupEvent(UIWordPieceGroupEvent.SEND_TO_DICTIONARY));
 		}
 	}
 }
