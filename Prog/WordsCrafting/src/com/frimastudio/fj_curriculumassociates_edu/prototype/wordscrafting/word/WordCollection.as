@@ -51,5 +51,13 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 				mCollection[aWord.WordString] = aWord;
 			}
 		}
+		
+		public function RemoveWord(aWord:Word):void
+		{
+			if (ContainWord(aWord))
+			{
+				delete mCollection[aWord.WordString];
+			}
+		}
 	}
 }

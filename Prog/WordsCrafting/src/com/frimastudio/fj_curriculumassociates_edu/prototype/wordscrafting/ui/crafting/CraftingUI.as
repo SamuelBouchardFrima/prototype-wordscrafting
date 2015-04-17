@@ -3,6 +3,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.Asset;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.mini.Mini;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.mini.MiniManager;
+	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.objective.ObjectiveManager;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.IconUIButton;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.MiniInteractionUI;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.UI;
@@ -18,11 +19,15 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 	import flash.events.MouseEvent;
 	import flash.events.TimerEvent;
 	import flash.geom.Point;
+	import flash.text.TextField;
+	import flash.text.TextFormat;
 	import flash.utils.Timer;
 	
 	public class CraftingUI extends MiniInteractionUI
 	{
 		private var mDictionaryButton:UIButton;
+		private var mObjectiveIcon:Bitmap;
+		private var mObjectiveField:TextField;
 		private var mRadioButton:UIButton;
 		private var mRadioSignal:Sprite;
 		private var mUIWordPieceList:Vector.<UIWordPiece>;
@@ -57,6 +62,34 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			mRadioButton.y = 100;
 			mRadioButton.addEventListener(MouseEvent.CLICK, OnClickRadioButton);
 			addChild(mRadioButton);
+			
+			graphics.lineStyle(1, 0xCCCCCC);
+			graphics.moveTo(500, 25);
+			graphics.lineTo(700, 25);
+			graphics.lineTo(700, 75);
+			graphics.lineTo(500, 75);
+			graphics.lineTo(500, 25);
+			
+			mObjectiveIcon = new Asset.ObjectiveButtonBitmap();
+			mObjectiveIcon.width = 40;
+			mObjectiveIcon.height = 40;
+			mObjectiveIcon.x = 505;
+			mObjectiveIcon.y = 30;
+			addChild(mObjectiveIcon);
+			
+			var format:TextFormat = new TextFormat();
+			format.size = 30;
+			format.align = "center";
+			
+			mObjectiveField = new TextField();
+			mObjectiveField.width = 145;
+			mObjectiveField.height = 40;
+			mObjectiveField.x = 550;
+			mObjectiveField.y = 30;
+			mObjectiveField.text = ObjectiveManager.Instance.NextObjective.Name;
+			mObjectiveField.selectable = false;
+			mObjectiveField.setTextFormat(format);
+			addChild(mObjectiveField);
 			
 			var signal:Bitmap = new Asset.RadioSignalBitmap();
 			signal.width = 150;

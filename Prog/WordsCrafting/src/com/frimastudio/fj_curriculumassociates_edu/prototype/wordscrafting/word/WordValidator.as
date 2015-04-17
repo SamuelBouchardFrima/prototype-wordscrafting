@@ -1,5 +1,6 @@
 package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 {
+	import com.frimastudio.fj_curriculumassociates_edu.prototype.util.Random;
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	import flash.net.URLLoader;
@@ -15,7 +16,13 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 			return mInstance;
 		}
 		
-		public var mWordDictionary:Dictionary;
+		private var mWordDictionary:Object;
+		private var mWordList:Vector.<String>;
+		
+		public function get RandomWord():String
+		{
+			return Random.FromList(mWordList);
+		}
 		
 		public function WordValidator()
 		{
@@ -42,17 +49,19 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 		{
 			(aEvent.currentTarget as URLLoader).removeEventListener(Event.COMPLETE, OnCompleteLoad);
 			
-			mWordDictionary = new Dictionary();
 			var data:XML = new XML(aEvent.target.data);
 			var parsedData:Array = data.text()[0].split("\n");
 			var word:String;
+			mWordDictionary = { };
+			mWordList = new Vector.<String>();
 			for (var i:int = 1, end:int = parsedData.length - 1; i < end; ++i)
 			{
-				word = parsedData[i];
+				word = parsedData[i].toLowerCase();
 				word = word.substr(0, word.length - 1);
 				if (word != "")
 				{
 					mWordDictionary[word] = true;
+					mWordList.push(word);
 				}
 			}
 			

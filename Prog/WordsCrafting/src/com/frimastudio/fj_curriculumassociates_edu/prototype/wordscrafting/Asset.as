@@ -10,6 +10,8 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting
 		public static var GroomingButtonBitmap:Class;
 		[Embed(source = "../../../../../../art/icon-book.png")]
 		public static var DictionaryButtonBitmap:Class;
+		[Embed(source = "../../../../../../art/icon-star.png")]
+		public static var ObjectiveButtonBitmap:Class;
 		
 		[Embed(source = "../../../../../../art/icon-mini.png")]
 		public static var MiniBitmap:Class;

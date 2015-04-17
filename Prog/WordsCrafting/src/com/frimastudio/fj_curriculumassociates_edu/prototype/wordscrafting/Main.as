@@ -1,5 +1,6 @@
 package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting
 {
+	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.objective.ObjectiveManager;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.HomeUI;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.UIManager;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.UIType;
@@ -38,6 +39,8 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting
 		
 		private function OnLoadCompleteWordValidator(aEvent:WordValidatorEvent):void
 		{
+			ObjectiveManager.Instance.Init();
+			
 			UIManager.Instance.CurrentUI = new UIType.HOME.UIClass();
 		}
 	}

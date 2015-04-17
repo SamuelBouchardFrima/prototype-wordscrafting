@@ -43,7 +43,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui
 			
 			if (mInstance)
 			{
-				throw new Error("UIManager is a singleton, and thus not intended for instantiation. Use UIManager.Instance instead.");
+				throw new Error("UIManager is a singleton not intended for instantiation. Use UIManager.Instance instead.");
 			}
 			
 			mUIContainer = new Sprite();

@@ -3,6 +3,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.crafting.CraftingUI;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.dictionary.DictionaryUI;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.grooming.GroomingUI;
+	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.objective.ObjectiveUI;
 	
 	public class UIType
 	{
@@ -10,6 +11,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui
 		public static var CRAFTING:UIType = new UIType(1, "CRAFTING", CraftingUI);
 		public static var GROOMING:UIType = new UIType(2, "GROOMING", GroomingUI);
 		public static var DICTIONARY:UIType = new UIType(3, "DICTIONARY", DictionaryUI);
+		public static var OBJECTIVE:UIType = new UIType(4, "OBJECTIVE", ObjectiveUI);
 		
 		private var mID:int;
 		private var mDescription:String;

@@ -7,7 +7,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 		function get Collection():Dictionary;
 		
 		function ContainWord(aWord:Word):Boolean;
-		
 		function AddWord(aWord:Word):void;
+		function RemoveWord(aWord:Word):void;
 	}
 }

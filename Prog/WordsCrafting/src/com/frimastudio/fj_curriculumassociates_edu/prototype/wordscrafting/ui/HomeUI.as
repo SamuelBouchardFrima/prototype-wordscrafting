@@ -9,6 +9,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui
 		private var mCraftingButton:UIButton;
 		private var mGroomingButton:UIButton;
 		private var mDictionaryButton:UIButton;
+		private var mObjectiveButton:UIButton;
 		
 		public function HomeUI()
 		{
@@ -17,22 +18,28 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui
 			var buttonSize:Point = new Point(100, 100);
 			
 			mCraftingButton = new IconUIButton(buttonSize, Asset.CraftingButtonBitmap);
-			mCraftingButton.x = 200;
+			mCraftingButton.x = 175;
 			mCraftingButton.y = 300;
-			addChild(mCraftingButton);
 			mCraftingButton.addEventListener(MouseEvent.CLICK, OnClickCraftingButton);
+			addChild(mCraftingButton);
 			
 			mGroomingButton = new IconUIButton(buttonSize, Asset.GroomingButtonBitmap);
-			mGroomingButton.x = 400;
+			mGroomingButton.x = 325;
 			mGroomingButton.y = 300;
-			addChild(mGroomingButton);
 			mGroomingButton.addEventListener(MouseEvent.CLICK, OnClickGroomingButton);
+			addChild(mGroomingButton);
 			
 			mDictionaryButton = new IconUIButton(buttonSize, Asset.DictionaryButtonBitmap);
-			mDictionaryButton.x = 600;
+			mDictionaryButton.x = 475;
 			mDictionaryButton.y = 300;
-			addChild(mDictionaryButton);
 			mDictionaryButton.addEventListener(MouseEvent.CLICK, OnClickDictionaryButton);
+			addChild(mDictionaryButton);
+			
+			mObjectiveButton = new IconUIButton(buttonSize, Asset.ObjectiveButtonBitmap);
+			mObjectiveButton.x = 625;
+			mObjectiveButton.y = 300;
+			mObjectiveButton.addEventListener(MouseEvent.CLICK, OnClickObjectiveButton);
+			addChild(mObjectiveButton);
 		}
 		
 		override public function Dispose():void
@@ -40,6 +47,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui
 			mCraftingButton.removeEventListener(MouseEvent.CLICK, OnClickCraftingButton);
 			mGroomingButton.removeEventListener(MouseEvent.CLICK, OnClickGroomingButton);
 			mDictionaryButton.removeEventListener(MouseEvent.CLICK, OnClickDictionaryButton);
+			mObjectiveButton.removeEventListener(MouseEvent.CLICK, OnClickObjectiveButton);
 			
 			super.Dispose();
 		}
@@ -57,6 +65,11 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui
 		private function OnClickDictionaryButton(aEvent:MouseEvent):void
 		{
 			UIManager.Instance.CurrentUI = new UIType.DICTIONARY.UIClass();
+		}
+		
+		private function OnClickObjectiveButton(aEvent:MouseEvent):void
+		{
+			UIManager.Instance.CurrentUI = new UIType.OBJECTIVE.UIClass();
 		}
 	}
 }

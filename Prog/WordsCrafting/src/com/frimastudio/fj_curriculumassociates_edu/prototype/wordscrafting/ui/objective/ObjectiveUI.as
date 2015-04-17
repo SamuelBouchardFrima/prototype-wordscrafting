@@ -1,4 +1,4 @@
-package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.dictionary
+package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.objective
 {
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.Asset;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.IconUIButton;
@@ -6,18 +6,15 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.d
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.UIButton;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.UIManager;
 	import com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.UIType;
-	import flash.display.Sprite;
 	import flash.events.MouseEvent;
 	import flash.geom.Point;
-	import flash.geom.Rectangle;
 	
-	public class DictionaryUI extends UI
+	public class ObjectiveUI extends UI
 	{
 		private var mHomeButton:UIButton;
-		private var mCraftingButton:UIButton;
-		private var mScrollbox:DictionaryScrollbox;
+		private var mScrollbox:ObjectiveScrollbox;
 		
-		public function DictionaryUI()
+		public function ObjectiveUI()
 		{
 			super();
 			
@@ -29,13 +26,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.d
 			mHomeButton.addEventListener(MouseEvent.CLICK, OnClickHomeButton);
 			addChild(mHomeButton);
 			
-			mCraftingButton = new IconUIButton(buttonSize, Asset.CraftingButtonBitmap);
-			mCraftingButton.x = 750;
-			mCraftingButton.y = 50;
-			mCraftingButton.addEventListener(MouseEvent.CLICK, OnClickCraftingButton);
-			addChild(mCraftingButton);
-			
-			mScrollbox = new DictionaryScrollbox(new Point(600, 400));
+			mScrollbox = new ObjectiveScrollbox(new Point(600, 400));
 			mScrollbox.x = 400;
 			mScrollbox.y = 300;
 			addChild(mScrollbox);
@@ -44,7 +35,6 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.d
 		override public function Dispose():void
 		{
 			mHomeButton.removeEventListener(MouseEvent.CLICK, OnClickHomeButton);
-			mCraftingButton.removeEventListener(MouseEvent.CLICK, OnClickCraftingButton);
 			
 			mScrollbox.Dispose();
 			
@@ -54,11 +44,6 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.d
 		private function OnClickHomeButton(aEvent:MouseEvent):void
 		{
 			UIManager.Instance.CurrentUI = new UIType.HOME.UIClass();
-		}
-		
-		private function OnClickCraftingButton(aEvent:MouseEvent):void
-		{
-			UIManager.Instance.CurrentUI = new UIType.CRAFTING.UIClass();
 		}
 	}
 }
