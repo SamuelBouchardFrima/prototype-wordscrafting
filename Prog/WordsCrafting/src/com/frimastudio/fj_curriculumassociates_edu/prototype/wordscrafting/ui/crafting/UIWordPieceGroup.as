@@ -20,6 +20,16 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			return mPieceList;
 		}
 		
+		public function get WordPieceList():Vector.<WordPiece>
+		{
+			var list:Vector.<WordPiece> = new Vector.<WordPiece>();
+			for (var i:int = 0, end:int = mPieceList.length; i < end; ++i)
+			{
+				list.push(mPieceList[i].Piece);
+			}
+			return list;
+		}
+		
 		private function get Valid():Boolean
 		{
 			var pieceList:Vector.<WordPiece> = new Vector.<WordPiece>();

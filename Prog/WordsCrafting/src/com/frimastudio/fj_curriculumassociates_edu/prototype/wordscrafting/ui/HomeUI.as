@@ -17,23 +17,23 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui
 			
 			var buttonSize:Point = new Point(100, 100);
 			
-			mCraftingButton = new IconUIButton(buttonSize, Asset.CraftingButtonBitmap);
-			mCraftingButton.x = 175;
-			mCraftingButton.y = 300;
-			mCraftingButton.addEventListener(MouseEvent.CLICK, OnClickCraftingButton);
-			addChild(mCraftingButton);
-			
 			mGroomingButton = new IconUIButton(buttonSize, Asset.GroomingButtonBitmap);
-			mGroomingButton.x = 325;
+			mGroomingButton.x = 175;
 			mGroomingButton.y = 300;
 			mGroomingButton.addEventListener(MouseEvent.CLICK, OnClickGroomingButton);
 			addChild(mGroomingButton);
 			
 			mDictionaryButton = new IconUIButton(buttonSize, Asset.DictionaryButtonBitmap);
-			mDictionaryButton.x = 475;
+			mDictionaryButton.x = 325;
 			mDictionaryButton.y = 300;
 			mDictionaryButton.addEventListener(MouseEvent.CLICK, OnClickDictionaryButton);
 			addChild(mDictionaryButton);
+			
+			mCraftingButton = new IconUIButton(buttonSize, Asset.CraftingButtonBitmap);
+			mCraftingButton.x = 475;
+			mCraftingButton.y = 300;
+			mCraftingButton.addEventListener(MouseEvent.CLICK, OnClickCraftingButton);
+			addChild(mCraftingButton);
 			
 			mObjectiveButton = new IconUIButton(buttonSize, Asset.ObjectiveButtonBitmap);
 			mObjectiveButton.x = 625;
