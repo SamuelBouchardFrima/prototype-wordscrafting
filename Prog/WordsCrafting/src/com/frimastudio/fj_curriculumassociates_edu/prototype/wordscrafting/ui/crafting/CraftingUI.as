@@ -499,12 +499,12 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			addChild(piece);
 			mUIWordPieceList.push(piece);
 			
-			removeChild(group);
 			group.removeEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownUIWordPieceGroup);
 			group.removeEventListener(UIWordPieceGroupEvent.RELEASE_PIECE, OnReleasePieceFromGroup);
 			group.removeEventListener(UIWordPieceGroupEvent.DRAG_PIECE, OnDragPieceFromGroup);
 			group.removeEventListener(UIWordPieceGroupEvent.SEND_TO_DICTIONARY, OnSendGroupToDictionary);
 			group.Dispose();
+			removeChild(group);
 			mUIWordPieceGroupList.splice(mUIWordPieceGroupList.indexOf(group), 1);
 			
 			if (group == mEquipedUIWordPieceGroup)
@@ -530,14 +530,30 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 		
 		private function OnSendGroupToDictionary(aEvent:UIWordPieceGroupEvent):void
 		{
-			var word:Word = CreateWord((aEvent.currentTarget as UIWordPieceGroup).PieceList);
+			var group:UIWordPieceGroup = aEvent.currentTarget as UIWordPieceGroup;
+			var word:Word = CreateWord(group.PieceList);
 			if (!word.Valid)
 			{
 				return;
 			}
 			
 			WordCollection.Instance.AddWord(word);
-			UIManager.Instance.CurrentUI = new UIType.DICTIONARY.UIClass();
+			
+			group.removeEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownUIWordPieceGroup);
+			group.removeEventListener(UIWordPieceGroupEvent.RELEASE_PIECE, OnReleasePieceFromGroup);
+			group.removeEventListener(UIWordPieceGroupEvent.DRAG_PIECE, OnDragPieceFromGroup);
+			group.removeEventListener(UIWordPieceGroupEvent.SEND_TO_DICTIONARY, OnSendGroupToDictionary);
+			group.Dispose();
+			removeChild(group);
+			mUIWordPieceGroupList.splice(mUIWordPieceGroupList.indexOf(group), 1);
+			
+			if (group == mEquipedUIWordPieceGroup)
+			{
+				mEquipedUIWordPieceGroup = null;
+				mRadioButton.Color = 0xFF0000;
+			}
+			
+			ClearUnusedWordPiece();
 		}
 	}
 }
