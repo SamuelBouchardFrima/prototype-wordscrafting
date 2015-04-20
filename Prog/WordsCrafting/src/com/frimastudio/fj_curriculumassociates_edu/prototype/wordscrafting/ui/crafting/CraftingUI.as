@@ -124,12 +124,33 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			{
 				if (mStartWord.Valid)
 				{
+					var list:Vector.<UIWordPiece> = new Vector.<UIWordPiece>();
+					var piece:UIWordPiece;
+					for (var i:int = 0, end:int = mStartWord.PieceList.length; i < end; ++i)
+					{
+						piece = new UIWordPiece(mStartWord.PieceList[i]);
+						piece.x = i * 50;
+						piece.y = 0;
+						list.push(piece);
+					}
+					
+					mEquipedUIWordPieceGroup = new UIWordPieceGroup(list);
+					mEquipedUIWordPieceGroup.x = mRadioButton.x;
+					mEquipedUIWordPieceGroup.y = mRadioButton.y;
+					mEquipedUIWordPieceGroup.addEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownUIWordPieceGroup);
+					mEquipedUIWordPieceGroup.addEventListener(UIWordPieceGroupEvent.RELEASE_PIECE, OnReleasePieceFromGroup);
+					mEquipedUIWordPieceGroup.addEventListener(UIWordPieceGroupEvent.DRAG_PIECE, OnDragPieceFromGroup);
+					mEquipedUIWordPieceGroup.addEventListener(UIWordPieceGroupEvent.SEND_TO_DICTIONARY, OnSendGroupToDictionary);
+					addChild(mEquipedUIWordPieceGroup);
+					mUIWordPieceGroupList.push(mEquipedUIWordPieceGroup);
+					
+					mRadioButton.Color = 0x00FF00;
 					SendRadioSignal();
 				}
-				else
-				{
-					mStartWord = null;
-				}
+				//else
+				//{
+					//mStartWord = null;
+				//}
 			}
 		}
 		
@@ -163,6 +184,35 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			super.Dispose();
 		}
 		
+		private function ClearUnusedWordPiece():void
+		{
+			var i:int, end:int;
+			for (i = 0, end = mUIWordPieceList.length; i < end; ++i)
+			{
+				mUIWordPieceList[i].removeEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownUIWordPiece);
+				removeChild(mUIWordPieceList[i]);
+			}
+			mUIWordPieceList.splice(0, mUIWordPieceList.length);
+			
+			for (i = 0, end = mUIWordPieceGroupList.length; i < end; ++i)
+			{
+				if (mUIWordPieceGroupList[i] != mEquipedUIWordPieceGroup)
+				{
+					mUIWordPieceGroupList[i].removeEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownUIWordPieceGroup);
+					mUIWordPieceGroupList[i].removeEventListener(UIWordPieceGroupEvent.RELEASE_PIECE, OnReleasePieceFromGroup);
+					mUIWordPieceGroupList[i].removeEventListener(UIWordPieceGroupEvent.DRAG_PIECE, OnDragPieceFromGroup);
+					mUIWordPieceGroupList[i].removeEventListener(UIWordPieceGroupEvent.SEND_TO_DICTIONARY, OnSendGroupToDictionary);
+					mUIWordPieceGroupList[i].Dispose();
+					removeChild(mUIWordPieceGroupList[i]);
+				}
+			}
+			mUIWordPieceGroupList.splice(0, mUIWordPieceGroupList.length);
+			if (mEquipedUIWordPieceGroup)
+			{
+				mUIWordPieceGroupList.push(mEquipedUIWordPieceGroup);
+			}
+		}
+		
 		private function CreateWord(aPieceList:Vector.<UIWordPiece>):Word
 		{
 			var pieceList:Vector.<WordPiece> = new Vector.<WordPiece>();
@@ -186,6 +236,8 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			removeChild(mRadioSignalBlocker);
 			mRadioSignalTimer.stop();
 			
+			ClearUnusedWordPiece();
+			
 			var i:int, end:int;
 			var piece:UIWordPiece;
 			for (i = 0, end = MiniManager.Instance.MiniList.length; i < end; ++i)
@@ -198,7 +250,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 				mUIWordPieceList.push(piece);
 			}
 			
-			mStartWord = null;
+			//mStartWord = null;
 		}
 		
 		private function StopPieceDrag():void 
@@ -288,28 +340,31 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			
 			var offset:Point = new Point(group.PieceList[0].width, group.PieceList[0].height);
 			
-			var slot:UIReserveSlot;
-			var slotPosition:Point;
-			for (var i:int = 0, end:int = mUIReserve.SlotList.length; i < end; ++i)
+			if (group.PieceList.length <= 2)
 			{
-				slot = mUIReserve.SlotList[i];
-				slotPosition = new Point(slot.x + mUIReserve.x, slot.y + mUIReserve.y);
-				if (CraftingReserve.Instance.ReserveList[slot.Index] == null)
+				var slot:UIReserveSlot;
+				var slotPosition:Point;
+				for (var i:int = 0, end:int = mUIReserve.SlotList.length; i < end; ++i)
 				{
-					if (group.x >= slotPosition.x - offset.x && group.x <= slotPosition.x + offset.x &&
-						group.y >= slotPosition.y - offset.y && group.y <= slotPosition.y + offset.y)
+					slot = mUIReserve.SlotList[i];
+					slotPosition = new Point(slot.x + mUIReserve.x, slot.y + mUIReserve.y);
+					if (CraftingReserve.Instance.ReserveList[slot.Index] == null)
 					{
-						CraftingReserve.Instance.ReserveList[slot.Index] = group.WordPieceList;
-						slot.UpdateTag();
-						
-						mUIWordPieceGroupList.splice(mUIWordPieceGroupList.indexOf(group), 1);
-						group.removeEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownUIWordPieceGroup);
-						group.removeEventListener(UIWordPieceGroupEvent.RELEASE_PIECE, OnReleasePieceFromGroup);
-						group.removeEventListener(UIWordPieceGroupEvent.DRAG_PIECE, OnDragPieceFromGroup);
-						group.removeEventListener(UIWordPieceGroupEvent.SEND_TO_DICTIONARY, OnSendGroupToDictionary);
-						group.Dispose();
-						removeChild(group);
-						return;
+						if (group.x >= slotPosition.x - offset.x && group.x <= slotPosition.x + offset.x &&
+							group.y >= slotPosition.y - offset.y && group.y <= slotPosition.y + offset.y)
+						{
+							CraftingReserve.Instance.ReserveList[slot.Index] = group.WordPieceList;
+							slot.UpdateTag();
+							
+							mUIWordPieceGroupList.splice(mUIWordPieceGroupList.indexOf(group), 1);
+							group.removeEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownUIWordPieceGroup);
+							group.removeEventListener(UIWordPieceGroupEvent.RELEASE_PIECE, OnReleasePieceFromGroup);
+							group.removeEventListener(UIWordPieceGroupEvent.DRAG_PIECE, OnDragPieceFromGroup);
+							group.removeEventListener(UIWordPieceGroupEvent.SEND_TO_DICTIONARY, OnSendGroupToDictionary);
+							group.Dispose();
+							removeChild(group);
+							return;
+						}
 					}
 				}
 			}
@@ -331,8 +386,23 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			}
 		}
 		
+		override protected function OnClickHomeButton(aEvent:MouseEvent):void
+		{
+			if (mStartWord.Valid)
+			{
+				WordCollection.Instance.AddWord(mStartWord);
+			}
+			
+			super.OnClickHomeButton(aEvent);
+		}
+		
 		private function OnClickDictionaryButton(aEvent:MouseEvent):void
 		{
+			if (mStartWord.Valid)
+			{
+				WordCollection.Instance.AddWord(mStartWord);
+			}
+			
 			UIManager.Instance.CurrentUI = new UIType.DICTIONARY.UIClass();
 		}
 		
@@ -348,10 +418,10 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			{
 				SendRadioSignal();
 			}
-			else
-			{
-				mStartWord = null;
-			}
+			//else
+			//{
+				//mStartWord = null;
+			//}
 		}
 		
 		private function OnMouseDownRadioSignalBlocker(aEvent:MouseEvent):void

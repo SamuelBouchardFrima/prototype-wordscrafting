@@ -60,7 +60,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui
 			return sprite;
 		}
 		
-		private function OnClickHomeButton(aEvent:MouseEvent):void
+		protected function OnClickHomeButton(aEvent:MouseEvent):void
 		{
 			UIManager.Instance.CurrentUI = new UIType.HOME.UIClass();
 		}

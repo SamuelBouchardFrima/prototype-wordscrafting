@@ -58,11 +58,14 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 			{
 				word = parsedData[i].toLowerCase();
 				word = word.substr(0, word.length - 1);
-				if (word != "")
+				
+				if (word == "" || word.indexOf("'") != -1 || word.indexOf("-") != -1 || word.indexOf(" ") != -1)
 				{
-					mWordDictionary[word] = true;
-					mWordList.push(word);
+					continue;
 				}
+				
+				mWordDictionary[word] = true;
+				mWordList.push(word);
 			}
 			
 			dispatchEvent(new WordValidatorEvent(WordValidatorEvent.LOAD_COMPLETE));

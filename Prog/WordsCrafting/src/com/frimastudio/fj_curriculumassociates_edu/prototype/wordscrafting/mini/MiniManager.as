@@ -33,7 +33,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.mini
 			}
 			
 			mMiniList = new Vector.<Mini>();
-			for (var i:int = 0, end:int = 5; i < end; ++i)
+			for (var i:int = 0, end:int = 8; i < end; ++i)
 			{
 				mMiniList.push(CreateRandomMini());
 			}

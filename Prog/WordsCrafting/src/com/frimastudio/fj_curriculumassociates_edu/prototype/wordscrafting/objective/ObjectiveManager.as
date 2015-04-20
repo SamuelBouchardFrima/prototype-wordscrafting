@@ -55,7 +55,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.obje
 			{
 				if (mObjectiveList[i].Name == aWord.WordString)
 				{
-					return true;
+					return !mObjectiveList[i].Complete;
 				}
 			}
 			return false;

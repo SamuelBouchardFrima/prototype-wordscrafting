@@ -70,6 +70,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.d
 		
 		private function OnClickRadioButton(aEvent:MouseEvent):void
 		{
+			WordCollection.Instance.RemoveWord(mWord);
 			UIManager.Instance.CurrentUI = new UIType.CRAFTING.UIClass(mWord);
 		}
 		
