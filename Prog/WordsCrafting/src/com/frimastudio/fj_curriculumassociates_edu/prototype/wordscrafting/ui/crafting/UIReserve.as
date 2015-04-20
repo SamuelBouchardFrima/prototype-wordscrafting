@@ -22,7 +22,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			for (var i:int = 0, end:int = CraftingReserve.Instance.ReserveList.length; i < end; ++i)
 			{
 				slot = new UIReserveSlot(i);
-				slot.x = (125 * i) - 250;
+				slot.x = (70 * i) - 315;
 				slot.y = 0;
 				slot.addEventListener(MouseEvent.MOUSE_DOWN, OnMouseDownSlot);
 				addChild(slot);
@@ -43,7 +43,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			var slot:UIReserveSlot = aEvent.currentTarget as UIReserveSlot;
 			if (CraftingReserve.Instance.ReserveList[slot.Index])
 			{
-				dispatchEvent(new UIReserveEvent(UIReserveEvent.RESTORE_WORD_PIECE_GROUP, slot.Index));
+				dispatchEvent(new UIReserveEvent(UIReserveEvent.RESTORE_WORD_PIECE, slot.Index));
 			}
 		}
 	}

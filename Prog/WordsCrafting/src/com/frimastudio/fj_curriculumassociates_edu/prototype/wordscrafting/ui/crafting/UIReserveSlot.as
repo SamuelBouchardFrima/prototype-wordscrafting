@@ -9,7 +9,9 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 	public class UIReserveSlot extends Sprite
 	{
 		private var mIndex:int;
+		private var mTagBox:Sprite;
 		private var mTag:TextField;
+		private var mTagFormat:TextFormat;
 		
 		public function get Index():int
 		{
@@ -24,39 +26,54 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 			
 			graphics.beginFill(0x000000, 0);
 			graphics.lineStyle(1, 0xCCCCCC);
-			graphics.moveTo(-50, -50);
-			graphics.lineTo(50, -50);
-			graphics.lineTo(50, 50);
-			graphics.lineTo(-50, 50);
-			graphics.lineTo(-50, -50);
+			graphics.moveTo(-30, -30);
+			graphics.lineTo(30, -30);
+			graphics.lineTo(30, 30);
+			graphics.lineTo(-30, 30);
+			graphics.lineTo(-30, -30);
 			graphics.endFill();
 			
+			mTagBox = new Sprite();
+			mTagBox.graphics.lineStyle(2, 0x999999);
+			mTagBox.graphics.moveTo(-25, -25);
+			mTagBox.graphics.lineTo(25, -25);
+			mTagBox.graphics.lineTo(25, 25);
+			mTagBox.graphics.lineTo(-25, 25);
+			mTagBox.graphics.lineTo(-25, -25);
+			
 			mTag = new TextField();
-			mTag.width = 100;
-			mTag.height = 25;
-			mTag.x = -50;
-			mTag.y = -12.5;
+			mTag.width = 50;
+			mTag.height = 50;
+			mTag.x = -25;
+			mTag.y = -25;
 			mTag.selectable = false;
-			addChild(mTag);
+			
+			mTagFormat = new TextFormat();
+			mTagFormat.size = mTag.height * 0.75;
+			mTagFormat.bold = true;
+			mTagFormat.align = "center";
+			
 			UpdateTag();
 		}
 		
 		public function UpdateTag():void
 		{
-			mTag.text = "";
-			var list:Vector.<WordPiece> = CraftingReserve.Instance.ReserveList[mIndex];
-			if (list)
+			var piece:WordPiece = CraftingReserve.Instance.ReserveList[mIndex];
+			if (piece)
 			{
-				for (var i:int = 0, end:int = list.length; i < end; ++i)
-				{
-					mTag.appendText(list[i].PieceString);
-				}
+				mTag.text = piece.PieceString;
+				mTag.setTextFormat(mTagFormat);
 				
-				var format:TextFormat = new TextFormat();
-				format.size = mTag.height * 0.75;
-				format.bold = true;
-				format.align = "center";
-				mTag.setTextFormat(format);
+				addChild(mTagBox);
+				addChild(mTag);
+			}
+			else
+			{
+				if (contains(mTagBox))
+				{
+					removeChild(mTagBox);
+					removeChild(mTag);
+				}
 			}
 		}
 	}

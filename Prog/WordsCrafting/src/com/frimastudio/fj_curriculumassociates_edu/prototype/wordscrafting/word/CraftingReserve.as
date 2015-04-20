@@ -9,9 +9,9 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 			return mInstance;
 		}
 		
-		private var mReserveList:Vector.<Vector.<WordPiece>>;
+		private var mReserveList:Vector.<WordPiece>;
 		
-		public function get ReserveList():Vector.<Vector.<WordPiece>>
+		public function get ReserveList():Vector.<WordPiece>
 		{
 			return mReserveList;
 		}
@@ -23,7 +23,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 				throw new Error("CraftingReserve is a singleton not intended for instantiation. Use CraftingReserve.Instance instead.");
 			}
 			
-			mReserveList = new Vector.<Vector.<WordPiece>>(5);
+			mReserveList = new Vector.<WordPiece>(10);
 		}
 	}
 }

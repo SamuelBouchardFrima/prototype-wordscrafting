@@ -4,7 +4,7 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.ui.c
 	
 	public class UIReserveEvent extends Event
 	{
-		public static const RESTORE_WORD_PIECE_GROUP:String = "UIReserveEvent::RESTORE_WORD_PIECE_GROUP";
+		public static const RESTORE_WORD_PIECE:String = "UIReserveEvent::RESTORE_WORD_PIECE";
 		
 		public var SlotIndex:int;
 		
