@@ -1,5 +1,8 @@
-<?xml version="1.0" encoding="utf-8" ?>
-<data>
+package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
+{
+	public class WordDictionary
+	{
+		public static const GRADE_1:XML = new XML("<data>" + (<![CDATA[
 ad
 dad
 mad
@@ -11253,4 +11256,11 @@ doe
 dough
 dual
 duel
-</data>
+			]]>).toString() + "</data>");
+		
+		public function WordDictionary()
+		{
+			throw new Error("WordDictionary is static and not intended for instantiation.");
+		}
+	}
+}

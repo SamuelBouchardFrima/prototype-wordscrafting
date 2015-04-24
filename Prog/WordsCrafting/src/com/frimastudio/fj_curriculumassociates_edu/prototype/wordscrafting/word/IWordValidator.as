@@ -6,8 +6,6 @@ package com.frimastudio.fj_curriculumassociates_edu.prototype.wordscrafting.word
 	{
 		function get RandomWord():String;
 		
-		function Load():void;
-		
 		function Validate(aWord:String):Boolean;
 	}	
 }
